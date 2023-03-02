@@ -1,6 +1,6 @@
 package com.example.app.Security;
 
-public class JWTUtil {
+public class JWTUtils {
 
     public static final String SECRET = "mySeceret123";
     public static final String AUTH8HEADER = "Authorization";

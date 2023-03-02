@@ -44,16 +44,16 @@ public class JwtauthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         System.out.println("successfulAuthentication");
         User user = (User) authResult.getPrincipal();
-        Algorithm algo = Algorithm.HMAC256(JWTUtil.SECRET);
+        Algorithm algo = Algorithm.HMAC256(JWTUtils.SECRET);
         String JwtAccessToken = JWT.create().withSubject((user.getUsername()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + JWTUtil.EXPIRE_TOKEN))
+                .withExpiresAt(new Date(System.currentTimeMillis() + JWTUtils.EXPIRE_TOKEN))
                 .withIssuer((request.getRequestURL().toString()))
                 .withClaim("roles",user.getAuthorities().stream().map(ga -> ga.getAuthority()).collect(Collectors.toList()))
                 .sign((algo));
 
 
         String JwtRefreshToken = JWT.create().withSubject((user.getUsername()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + JWTUtil.REFRESH_TOKEN))
+                .withExpiresAt(new Date(System.currentTimeMillis() + JWTUtils.REFRESH_TOKEN))
                 .withIssuer((request.getRequestURL().toString()))
                 .sign((algo));
         Map<String,String> idToken =new HashMap<>();

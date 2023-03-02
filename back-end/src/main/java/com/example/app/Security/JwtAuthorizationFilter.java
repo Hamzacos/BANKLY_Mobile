@@ -25,11 +25,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter  {
         if(request.getServletPath().equals("/refreshToken")){
             filterChain.doFilter(request,response);
         }else{
-            String authorizationToken = request.getHeader(JWTUtil.AUTH8HEADER);
-            if(authorizationToken != null && authorizationToken.startsWith(JWTUtil.PREFIX)){
+            String authorizationToken = request.getHeader(JWTUtils.AUTH8HEADER);
+            if(authorizationToken != null && authorizationToken.startsWith(JWTUtils.PREFIX)){
                 try{
-                    String jwt = authorizationToken.substring(JWTUtil.PREFIX.length());
-                    Algorithm algorithm = Algorithm.HMAC256(JWTUtil.SECRET);
+                    String jwt = authorizationToken.substring(JWTUtils.PREFIX.length());
+                    Algorithm algorithm = Algorithm.HMAC256(JWTUtils.SECRET);
                     JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
                     String username = decodedJWT.getSubject();
