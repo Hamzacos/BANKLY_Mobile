@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+
 class MyCard extends StatelessWidget {
+
+
   final double balance;
   final int cardNumber;
   final int expiryMonth;
@@ -13,8 +16,12 @@ class MyCard extends StatelessWidget {
       required this.cardNumber,
       required this.expiryMonth,
       required this.expiryYear,
-      required this.color})
+      required this.color
+      //required this.wallet
+    })
       : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +53,7 @@ class MyCard extends StatelessWidget {
               height: 10,
             ),
             Text(
-               balance.toString() + ' DH' ,
+              '${balance != null ? balance.toString() : "DH"}',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,

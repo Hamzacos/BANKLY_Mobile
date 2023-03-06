@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../models/wallet.dart';
+import '../service/wallet_service.dart';
 import '../utilities/my_button.dart';
 import '../utilities/my_card.dart';
 import '../utilities/my_list-tile.dart';
@@ -14,13 +16,33 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = PageController();
+  Wallet? wallet;
+
+  @override
+  void initState() {
+    super.initState();
+    _getWallet();
+  }
+
+  Future<void> _getWallet() async {
+    try {
+      final walletData = await WalletService().getWallet();
+      setState(() {
+        wallet = walletData;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 241, 241, 241),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+
+        },
         backgroundColor: Colors.blue,
         child: Icon(Icons.home),
       ),
@@ -73,9 +95,10 @@ class _HomePageState extends State<HomePage> {
             child: PageView(
               scrollDirection: Axis.horizontal,
               controller: _controller,
-              children: const [
-                MyCard(
-                  balance: 8950.20,
+              children: [
+                if (wallet != null)
+                  MyCard(
+                  balance: wallet!.balance,
                   cardNumber: 123456789,
                   expiryMonth: 10,
                   expiryYear: 24,
@@ -95,22 +118,24 @@ class _HomePageState extends State<HomePage> {
 
           const SizedBox(height: 24),
 
-          const Padding(
+           Padding(
             padding: EdgeInsets.symmetric(horizontal: 0.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 MyButton(
-                  iconImagePath: 'lib/icons/credit-card.png',
-                  buttonText: 'Pay',
-                ),
-                MyButton(
                   iconImagePath: 'lib/icons/save-money.png',
                   buttonText: 'Send',
+                  onTap: () {
+                    Navigator.pushNamed(context, 'DebitPage');
+                  },
                 ),
                 MyButton(
                   iconImagePath: 'lib/icons/bill.png',
                   buttonText: 'Bills',
+                  onTap: () {
+                    Navigator.pushNamed(context, '/debit');
+                  },
                 ),
               ],
             ),

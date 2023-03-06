@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wallet_front/pages/debit_page.dart';
 import 'package:wallet_front/pages/home_page.dart';
 import 'package:wallet_front/pages/login_page.dart';
+import 'package:wallet_front/pages/transaction_history_page.dart';
 
 void main(){
   runApp(MyApp());
@@ -15,6 +17,8 @@ class MyApp extends StatefulWidget{
 }
 
 class MyAppState extends State<MyApp>{
+
+
   @override
   void iniState(){
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -28,7 +32,8 @@ class MyAppState extends State<MyApp>{
       routes: {
         "/" :(context) => LoginPage(),
         "HomePage" :(context) => HomePage(),
-
+        "TransactionHistoryPage" : (context) => TransactionHistoryPage(),
+        "DebitPage" : (context) => DebitPage(),
       },
     );
   }

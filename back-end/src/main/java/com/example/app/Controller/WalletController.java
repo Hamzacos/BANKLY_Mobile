@@ -1,9 +1,14 @@
 package com.example.app.Controller;
 
+import com.example.app.DTO.WalletDTO;
 import com.example.app.Entity.Wallet;
+import com.example.app.Entity.appUser;
 import com.example.app.service.WalletService;
+import com.example.app.service.impl.AccountServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/wallet")
 public class WalletController {
     private final WalletService walletService;
+    private final AccountServiceImpl accountService;
 
     @PostMapping("/add")
     public Wallet addWallet(@RequestBody Wallet wallet) {
@@ -25,14 +31,14 @@ public class WalletController {
     }
 
     @GetMapping("/Wallets")
-    public List<Wallet> getWallet() {
+    public List<WalletDTO> getWallet() {
         return walletService.getAll();
     }
 
-    @GetMapping("/Wallet/{walletId}")
+    /*@GetMapping("/Wallet/{walletId}")
     public Wallet getOne(@PathVariable Long walletId) {
         return walletService.getOne(walletId);
-    }
+    }*/
 
     @GetMapping("/balance/{walletId}")
     public ResponseEntity<Double> checkBalance(@PathVariable Long walletId) {
@@ -40,4 +46,14 @@ public class WalletController {
         return ResponseEntity.ok(balance);
     }
 
+
+    @GetMapping("/mywallets")
+    public List<WalletDTO> getUserWallets() {
+        return walletService.showMywallet();
+    }
+
+    @GetMapping("/getWalletuser")
+    public List<Wallet>  showWaalet(){
+        return walletService.getOneWallet();
+    }
 }

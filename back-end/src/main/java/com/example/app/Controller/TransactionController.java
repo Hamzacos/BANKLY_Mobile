@@ -6,6 +6,9 @@ import com.example.app.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/transaction")
@@ -28,12 +31,19 @@ public class TransactionController {
     }
 
     @PostMapping("/debit")
-    public void debit(@RequestParam("walletId") Long walletId, @RequestParam("amount") Double amount) {
-        transactionService.debit(walletId, amount);
+    public void debit(@RequestBody Map<String, Double> request) {
+        Double amount = request.get("amount");
+        transactionService.debit(amount);
     }
-
     @PostMapping("/credit")
     public void credit(@RequestParam("walletId") Long walletId, @RequestParam("amount") Double amount) {
         transactionService.credit(walletId, amount);
     }
+
+    @GetMapping("/showAll")
+        public List<Transaction> showALL(){
+        return transactionService.showALL();
+    }
+
+
 }

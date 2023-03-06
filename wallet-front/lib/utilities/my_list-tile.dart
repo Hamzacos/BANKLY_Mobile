@@ -61,10 +61,13 @@ class MyListTile extends StatelessWidget {
               )
             ],
           ),
-          Icon(
-            Icons.arrow_forward_ios,
+          IconButton(
+            icon: Icon(Icons.arrow_forward_ios),
             color: Colors.blue,
-          ),
+            onPressed: () {
+              Navigator.pushNamed(context, "TransactionHistoryPage");
+            },
+          )
         ],
       ),
     );

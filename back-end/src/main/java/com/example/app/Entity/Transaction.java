@@ -16,9 +16,11 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date date;
+    private Date date = new Date();
 
     private double amount;
+
+    private double amountTransaction;
 
     @Enumerated
     private Type type;
